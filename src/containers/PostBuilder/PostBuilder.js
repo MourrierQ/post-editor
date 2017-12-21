@@ -7,63 +7,93 @@ import classes from "./PostBuilder.css";
 
 export class PostBuilder extends Component {
   state = {
-    postEdits: [{ title: "Hello" }, { subtitle: "world" }, { content: "!!!" }],
-    selected: "title"
+    postEdits: [{ content: "", type: "title", key: 0 }],
+    postPreviewContent: [],
+    postEditsType: {
+      title: 1,
+      subtitle: 0,
+      content: 0
+    },
+    selected: "title",
+    indexEditPosts: 0
   };
 
   editHandler = event => {
     const postEdits = [...this.state.postEdits];
-    const indexes = postEdits.map(postEdit => {
-      return Object.keys(postEdit);
-    });
-    const index = indexes.findIndex(element => {
-      console.log("Element: " + element + " selected: " + this.state.selected);
-      return element == this.state.selected;
-    });
-
-    postEdits[index] = { [this.state.selected]: event.target.value };
-    console.log("Index: " + index);
+    const index = parseInt(event.target.name, 10);
+    console.log("index = " + index);
+    console.log(postEdits[index]);
+    postEdits[index].content = event.target.value;
     this.setState({ postEdits });
   };
 
   selectTypeHandler = event => {
     const selected = event.target.value;
-    this.setState({ selected });
+    const index = parseInt(event.target.name, 10);
+    let postEdits = [...this.state.postEdits];
+    console.log(index);
+    postEdits[index].type = selected;
+    this.setState({ postEdits });
+  };
+
+  addPostEditHandler = () => {
+    let selected;
+    switch (this.state.selected) {
+      case "subtitle":
+        selected = "content";
+        break;
+      default:
+        selected = "subtitle";
+    }
+
+    const postEditsType = { ...this.state.postEditsType };
+    postEditsType[selected] = postEditsType[selected]++;
+
+    const indexEditPosts = this.state.indexEditPosts + 1;
+
+    const editPost = {
+      [selected]: "",
+      type: selected,
+      key: indexEditPosts
+    };
+
+    const postEdits = [...this.state.postEdits];
+    postEdits.push(editPost);
+
+    this.setState({ postEditsType, selected, indexEditPosts, postEdits });
   };
 
   render() {
     const copyPostEdits = [...this.state.postEdits];
-    let index = 0;
-    console.log(this.state.selected);
 
-    const postTitle = copyPostEdits.map(postEdit => {
-      index++;
-      return <h1 key={index}>{postEdit.title}</h1>;
+    const postPreview = copyPostEdits.map(element => {
+      let postElement;
+      switch (element.type) {
+        case "title":
+          return <h1 key={element.key}>{element.content}</h1>;
+
+        case "subtitle":
+          return <h3 key={element.key}>{element.content}</h3>;
+
+        case "content":
+          return <p key={element.key}>{element.content}</p>;
+
+        default:
+          return null;
+      }
     });
 
-    const postSubtitle = copyPostEdits.map(postEdit => {
-      index++;
-      return <h3 key={index}>{postEdit.subtitle}</h3>;
-    });
-
-    const postContent = copyPostEdits.map(postEdit => {
-      index++;
-      return <p key={index}>{postEdit.content}</p>;
-    });
+    console.log(postPreview);
 
     return (
       <div className={classes.PostBuilder}>
         <PostControls
           editPost={this.editHandler}
           selectType={this.selectTypeHandler}
-          type={this.state.selected}
-          addEditPost={this.addpostEditHandler}
+          addEditPost={this.addPostEditHandler}
+          postEdits={this.state.postEdits}
         />
-        <Post>
-          {postTitle}
-          {postSubtitle}
-          {postContent}
-        </Post>
+        <Post>{postPreview}</Post>
       </div>
     );
   }
