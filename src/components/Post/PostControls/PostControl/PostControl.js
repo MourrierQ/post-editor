@@ -7,7 +7,9 @@ import TextareaAutosize from "react-autosize-textarea";
 const postControl = props => {
   const style = {
     width: "80%",
-    marginTop: "20px"
+    marginTop: "20px",
+    outLine: "none",
+    borderRadius: "5px"
   };
   return (
     <div className={classes.PostControl}>
