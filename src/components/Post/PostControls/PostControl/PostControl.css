@@ -3,6 +3,17 @@
     margin: 20px auto;
     text-align: center;
     padding: 10px 20px;
-    box-shadow: 0 .1rem 2rem rgba(0,0,0,.5);
+    box-shadow: 0 0.01rem .5rem rgba(0,0,0,.2);
     background-color: rgba(255,255,255, .9);
+    border-radius: 5px;
+    border: 1px solid #0aa880;
+    padding: 2rem 0;
+    position: relative;
 }
+
+.PostControl select{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+

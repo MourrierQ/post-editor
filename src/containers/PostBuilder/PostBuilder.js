@@ -21,9 +21,10 @@ export class PostBuilder extends Component {
   editHandler = event => {
     const postEdits = [...this.state.postEdits];
     const index = parseInt(event.target.name, 10);
-    console.log("index = " + index);
-    console.log(postEdits[index]);
+    console.log(event.target.value);
     postEdits[index].content = event.target.value;
+
+    console.log(postEdits[index.content]);
     this.setState({ postEdits });
   };
 
@@ -67,16 +68,35 @@ export class PostBuilder extends Component {
     const copyPostEdits = [...this.state.postEdits];
 
     const postPreview = copyPostEdits.map(element => {
-      let postElement;
+      const cr = "\n";
+      const carriageReturn =
+        element.content[element.content.length - 1] !== "\n" ? false : true;
+      const lineBreak = carriageReturn ? cr : null;
+      console.log(lineBreak);
       switch (element.type) {
         case "title":
-          return <h1 key={element.key}>{element.content}</h1>;
+          return (
+            <h1 key={element.key}>
+              {element.content}
+              {lineBreak}
+            </h1>
+          );
 
         case "subtitle":
-          return <h3 key={element.key}>{element.content}</h3>;
+          return (
+            <h3 key={element.key}>
+              {element.content}
+              {lineBreak}
+            </h3>
+          );
 
         case "content":
-          return <p key={element.key}>{element.content}</p>;
+          return (
+            <p key={element.key}>
+              {element.content}
+              {lineBreak}
+            </p>
+          );
 
         default:
           return null;

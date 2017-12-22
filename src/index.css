@@ -2,6 +2,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif;
-  background-image: linear-gradient(to right, orangered, orange);
+  /* background-image: linear-gradient(to right, orangered, orange); */
+  background-color: #cccbcb;
 }
 
+*{
+  margin: 0;
+  padding: 0;
+}
