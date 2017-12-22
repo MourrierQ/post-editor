@@ -23,6 +23,9 @@ const postControl = props => {
         <option value="subtitle">subtitle</option>
         <option value="content">content</option>
       </select>
+      <a name={`${props.index}`} onClick={props.remove}>
+        X
+      </a>
       <h4>{props.type}</h4>
       <TextareaAutosize
         style={style}

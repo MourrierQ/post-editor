@@ -17,3 +17,17 @@
     top: 10px;
 }
 
+.PostControl a{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 1rem;
+    color: #ccc;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.PostControl h5:hover{
+    color: orangered;
+}
+

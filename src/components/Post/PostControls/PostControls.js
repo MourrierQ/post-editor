@@ -6,16 +6,19 @@ import classes from "./PostControls.css";
 
 const postControls = props => {
   const postControls = props.postEdits.map(postEdit => {
-    return (
-      <PostControl
-        selectType={props.selectType}
-        editPost={props.editPost}
-        type={postEdit.type}
-        key={postEdit.key}
-        index={postEdit.key}
-        content={postEdit.content}
-      />
-    );
+    if (postEdit)
+      return (
+        <PostControl
+          selectType={props.selectType}
+          editPost={props.editPost}
+          type={postEdit.type}
+          key={postEdit.key}
+          index={postEdit.key}
+          content={postEdit.content}
+          remove={props.remove}
+        />
+      );
+    return null;
   });
 
   return (

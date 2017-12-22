@@ -64,23 +64,32 @@ export class PostBuilder extends Component {
     this.setState({ postEditsType, selected, indexEditPosts, postEdits });
   };
 
+  removePostEditHandler = event => {
+    const postEdits = [...this.state.postEdits];
+    const index = parseInt(event.target.name, 10);
+    postEdits[index] = null;
+    this.setState({ postEdits });
+  };
+
   render() {
     const copyPostEdits = [...this.state.postEdits];
 
     const postPreview = copyPostEdits.map(element => {
-      switch (element.type) {
-        case "title":
-          return <h1 key={element.key}>{element.content}</h1>;
+      if (element)
+        switch (element.type) {
+          case "title":
+            return <h1 key={element.key}>{element.content}</h1>;
 
-        case "subtitle":
-          return <h3 key={element.key}>{element.content}</h3>;
+          case "subtitle":
+            return <h3 key={element.key}>{element.content}</h3>;
 
-        case "content":
-          return <p key={element.key}>{element.content}</p>;
+          case "content":
+            return <p key={element.key}>{element.content}</p>;
 
-        default:
-          return null;
-      }
+          default:
+            return null;
+        }
+      return null;
     });
 
     return (
@@ -90,6 +99,7 @@ export class PostBuilder extends Component {
           selectType={this.selectTypeHandler}
           addEditPost={this.addPostEditHandler}
           postEdits={this.state.postEdits}
+          remove={this.removePostEditHandler}
         />
         <Post>{postPreview}</Post>
       </div>
